@@ -4,6 +4,10 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
+    ADD_TO_CART,
+    GET_CART_ITEM,
+    REMOVE_CART_ITEM,
+    ON_SUCCESS_BUY
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -47,3 +51,65 @@ export function logoutUser(){
     }
 }
 
+export function addToCart(id){
+
+    let body = {
+        productId: id
+    }
+    const request = axios.post(`${USER_SERVER}/addToCart`, body)
+                        .then(response => response.data);
+
+    return {
+        type: ADD_TO_CART,
+        payload: request
+    }
+}
+
+export function getCartItems(cartItems, userCart){
+
+    const request = axios.get(`/api/product/product_by_id?id=${cartItems}&type=array`)
+        .then(response => {
+            userCart.forEach(cartItem => {
+                response.data.forEach((productDetail, index) => {
+                    if(cartItem.id === productDetail._id) {
+                        response.data[index].quantity = cartItem.quantity
+                    }
+                })
+            })
+            return response.data
+        });
+
+    return {
+        type: GET_CART_ITEM,
+        payload: request
+    }
+}
+
+export function removeCartItem(productId) {
+    const request = axios.get(`${USER_SERVER}/removeFromCart?id=${productId}`)
+        .then(response => {
+            response.data.cart.forEach(item => {
+                response.data.productInfo.forEach((product, index) => {
+                    if(item.id === product._id) {
+                        response.data.productInfo[index].quantity = item.quantity
+                    }
+                })
+            })
+            return response.data
+        });
+
+    return {
+        type: REMOVE_CART_ITEM,
+        payload: request
+    }
+}
+
+export function onSuccessBuy(data) {
+    const request = axios.post(`${USER_SERVER}/successBuy`, data)
+        .then(response => response.data);
+
+    return {
+        type: ON_SUCCESS_BUY,
+        payload: request
+    }
+}

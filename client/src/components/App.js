@@ -8,6 +8,9 @@ import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
 import UploadProduct from './views/UploadProduct/UploadProduct';
+import ProductDetailPage from './views/ProductDetailPage/ProductDetailPage';
+import CartPage from './views/CartPage/CartPage';
+import HistoryPage from './views/HistoryPage/HistoryPage';
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -23,7 +26,9 @@ function App() {
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/product/upload" component={Auth(UploadProduct, true)} />
-          {/*<Route exact path="/favorite" component={Auth(FavoritePage, true)} />*/}
+          <Route exact path="/product/:productId" component={Auth(ProductDetailPage, null)} />
+          <Route exact path="/user/cart" component={Auth(CartPage, true)} />
+          <Route exact path="/history" component={Auth(HistoryPage, true)} />
         </Switch>
       </div>
       <Footer />
