@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Typography, Button, Form, message, Input, Icon } from 'antd';
 import FileUpload from '../../utils/FileUpload';
+import TextEditer from './Sections/TextEditer';
 import Axios from 'axios';
 
 const { TextArea } = Input;
@@ -122,6 +123,10 @@ function UploadProduct(props) {
                         <option key={index} value={item.key}>{item.value}</option>
                      ))}
                 </select>
+                <br />
+                <br />
+
+                <TextEditer />
                 <br />
                 <br />
 
