@@ -12,7 +12,7 @@ function ProductInfo(props) {
 
     return (
         <div>
-            <Descriptions title="User Info" bordered>
+            <Descriptions title="상품 정보" bordered>
                 <Descriptions.Item label="가격">{props.detail.price}</Descriptions.Item>
                 <Descriptions.Item label="구매수">{props.detail.sold}</Descriptions.Item>
                 <Descriptions.Item label="방문자">{props.detail.views}</Descriptions.Item>

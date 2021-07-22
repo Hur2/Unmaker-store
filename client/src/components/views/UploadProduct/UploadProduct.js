@@ -25,8 +25,10 @@ function UploadProduct(props) {
     const [Title, setTitle] = useState("")
     const [Description, setDescription] = useState("")
     const [Price, setPrice] = useState(0)
+    const [SalePrice, setSalePrice] = useState(0)
     const [Continent, setContinent] = useState(1)
     const [Images, setImages] = useState([])
+    const [Detail, setDetail] = useState("")
 
     const titleChangeHandler = (event) => {
         setTitle(event.currentTarget.value)
@@ -40,12 +42,20 @@ function UploadProduct(props) {
         setPrice(event.currentTarget.value)
     }
 
+    const salePriceChangeHandler = (event) => {
+        setSalePrice(event.currentTarget.value)
+    }
+
     const continentChangeHandler = (event) => {
         setContinent(event.currentTarget.value)
     }
 
     const updateImages = (newImages) => {
         setImages(newImages)
+    }
+
+    const detailChangeHandler = (data) => {
+        setDetail(data)
     }
 
     const submitHandler = (event) => {
@@ -60,6 +70,7 @@ function UploadProduct(props) {
             title: Title,
             description: Description,
             price: Price,
+            salePrice: SalePrice,
             images: Images,
             continents: Continent
         }
@@ -82,7 +93,7 @@ function UploadProduct(props) {
             </div>
             <br/>
 
-            <label>썸네일</label>
+            <label><strong>썸네일</strong></label>
             <FileUpload refreshFunction={updateImages}/>
             <p>300x240(px)을 권장합니다.</p>
             
@@ -92,31 +103,19 @@ function UploadProduct(props) {
 
                 <br />
                 <br />
-                <label>이름</label>
+                <hr />
+                <br />
+                <label><strong>상품명</strong></label>
                 <Input 
                     onChange={titleChangeHandler}
                     value={Title}
                 />
+                <br />
+                <br />
+                <hr />
+                <br />
 
-                <br />
-                <br />
-                <label>설명</label>
-                <TextArea
-                    onChange={descriptionChangeHandler}
-                    value={Description}
-                />
-
-                <br />
-                <br />
-                <label>가격($)</label>
-                <Input
-                    type="number"
-                    min="0"
-                    onChange={priceChangeHandler}
-                    value={Price}
-                />
-
-                <br />
+                <label><strong>카테고리</strong></label>
                 <br />
                 <select onChange={continentChangeHandler} value={Continent}>
                     {Continents.map((item, index) => (
@@ -125,14 +124,52 @@ function UploadProduct(props) {
                 </select>
                 <br />
                 <br />
+                <hr />
+                <br />
 
-                <TextEditer />
+                <label><strong>가격(₩)</strong></label>
+                <Input
+                    type="number"
+                    min="0"
+                    onChange={priceChangeHandler}
+                    value={Price}
+                />
                 <br />
                 <br />
 
-                <Button htmlType="submit" size="large" >
-                    확인
-                </Button>
+                <label><strong>할인가격(₩)</strong></label>
+                <Input
+                    type="number"
+                    min="0"
+                    onChange={salePriceChangeHandler}
+                    value={SalePrice}
+                />
+                <br />
+                <br />
+                <hr />
+                <br />
+
+                <label><strong>상세설명</strong></label>
+                <TextEditer onChangefunction={detailChangeHandler}/>
+                <br />
+                <br />
+
+                <br />
+                <br />
+
+                <label>상세설명</label>
+                <TextArea
+                    onChange={descriptionChangeHandler}
+                    value={Description}
+                />
+                <br />
+                <br />
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button htmlType="submit" size="large" >
+                        확인
+                    </Button>
+                </div>
             </Form>
         </div>
     )

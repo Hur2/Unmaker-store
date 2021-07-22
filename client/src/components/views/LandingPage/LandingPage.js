@@ -62,10 +62,12 @@ function LandingPage() {
             <Card
                 cover={<a href={`/product/${product._id}`}><ImageSlider images={product.images}/></a>}
             >
-                <Meta 
+                <Meta
                     title={product.title}
-                    description={`${product.price}천원`}
                 />
+                {product.salePrice == 0 ? `${product.price}원` : 
+                (<React.Fragment><strike>{product.price}</strike> =&gt; <b>{product.salePrice}원</b></React.Fragment>)} <br />
+                {product.sold == 0 ? ` ` : `구매 ${product.sold}`}
             </Card>
         </Col> 
     })

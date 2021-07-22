@@ -18,6 +18,10 @@ const productSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    salePrice: {
+        type: Number,
+        default: 0
+    },
     images: {
         type: Array,
         default: []
