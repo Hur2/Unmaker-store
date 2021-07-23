@@ -56,6 +56,10 @@ function LandingPage() {
         setSkip(skip)
     }
 
+    const numberWithCommas = x => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     const renderCards = Products.map((product, index) => {
         console.log(product)
         return <Col lg={6} md={8} xs={24} key={index}>
@@ -65,8 +69,8 @@ function LandingPage() {
                 <Meta
                     title={product.title}
                 />
-                {product.salePrice == 0 ? `${product.price}원` : 
-                (<React.Fragment><strike>{product.price}</strike> =&gt; <b>{product.salePrice}원</b></React.Fragment>)} <br />
+                {product.salePrice == 0 ? `${numberWithCommas(product.price)}원` : 
+                (<React.Fragment><strike>{numberWithCommas(product.price)}</strike> =&gt; <b>{numberWithCommas(product.salePrice)}원</b></React.Fragment>)} <br />
                 {product.sold == 0 ? ` ` : `구매 ${product.sold}`}
             </Card>
         </Col> 

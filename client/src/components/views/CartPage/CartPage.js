@@ -28,7 +28,11 @@ function CartPage(props) {
     let calculateTotal = (cartDetail) => {
         let total = 0;
         cartDetail.map(item => {
-            total += parseInt(item.price, 10) * item.quantity
+            if(item.salePrice==0){
+                total += parseInt(item.price, 10) * item.quantity + item.shippingFee
+            } else {
+                total += parseInt(item.salePrice, 10) * item.quantity + item.shippingFee
+            }
         })
         setTotal(total)
         setShowTotal(true)
@@ -66,8 +70,8 @@ function CartPage(props) {
             </div>
             
             {ShowTotal ?
-                <div style={{ marginTop: '3rem' }}>
-                    <h2>총 가격: {Total} 천원</h2>
+                <div style={{ marginTop: '3rem', float: "right" }}>
+                    <h2>총 가격: {Total} 원</h2>
                     <Paypal total={Total} onSuccess={transactionSuccess}/>
                 </div>
                 : ShowSuccess ?

@@ -7,17 +7,17 @@ import Axios from 'axios';
 const { TextArea } = Input;
 
 const Continents = [
-    { ket: 1, value: "가구/인테리어" },
-    { ket: 2, value: "도서" },
-    { ket: 3, value: "디지털/가전" },
-    { ket: 4, value: "생활/건강" },
-    { ket: 5, value: "스포츠/레저" },
-    { ket: 6, value: "식품" },
-    { ket: 7, value: "여가/생활편의" },
-    { ket: 8, value: "출산/육아" },
-    { ket: 9, value: "패션의류" },
-    { ket: 10, value: "패션잡화" },
-    { ket: 11, value: "화장품/미용" }
+    { key: 1, value: "가구/인테리어" },
+    { key: 2, value: "도서" },
+    { key: 3, value: "디지털/가전" },
+    { key: 4, value: "생활/건강" },
+    { key: 5, value: "스포츠/레저" },
+    { key: 6, value: "식품" },
+    { key: 7, value: "여가/생활편의" },
+    { key: 8, value: "출산/육아" },
+    { key: 9, value: "패션의류" },
+    { key: 10, value: "패션잡화" },
+    { key: 11, value: "화장품/미용" }
 ]
 
 function UploadProduct(props) {
@@ -27,6 +27,7 @@ function UploadProduct(props) {
     const [Price, setPrice] = useState(0)
     const [SalePrice, setSalePrice] = useState(0)
     const [Continent, setContinent] = useState(1)
+    const [ShippingFee, setShippingFee] = useState(0)
     const [Images, setImages] = useState([])
     const [Detail, setDetail] = useState("")
 
@@ -46,6 +47,10 @@ function UploadProduct(props) {
         setSalePrice(event.currentTarget.value)
     }
 
+    const shippingFeeChangeHandler = (event) => {
+        setShippingFee(event.currentTarget.value)
+    }
+
     const continentChangeHandler = (event) => {
         setContinent(event.currentTarget.value)
     }
@@ -61,8 +66,16 @@ function UploadProduct(props) {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        if(!Title || !Description || !Price || !Continent || !Images) {
-            return alert("모든 값을 넣어주셔야 합니다.")
+        if(!Title) {
+            return alert("상품명을 입력하셔야 합니다.")
+        } else if(!Continent) {
+            return alert("카테고리를 선택하셔야 합니다.")
+        } else if(!Price) {
+            return alert("가격을 입력하셔야 합니다.")
+        } else if(!SalePrice) {
+            return alert("할인가격을 입력하셔야 합니다.")
+        } else if(!Detail) {
+            return alert("상세설명을 작성하셔야 합니다.")
         }
 
         const body = {
@@ -72,7 +85,9 @@ function UploadProduct(props) {
             price: Price,
             salePrice: SalePrice,
             images: Images,
-            continents: Continent
+            continents: Continent,
+            detail: Detail,
+            shippingFee: ShippingFee
         }
 
         Axios.post('/api/product/', body)
@@ -144,6 +159,17 @@ function UploadProduct(props) {
                     onChange={salePriceChangeHandler}
                     value={SalePrice}
                 />
+
+                <br />
+                <br />
+                <label><strong>배송비</strong></label>
+                <Input
+                    type="number"
+                    min="0"
+                    onChange={shippingFeeChangeHandler}
+                    value={ShippingFee}
+                />
+
                 <br />
                 <br />
                 <hr />
@@ -156,8 +182,7 @@ function UploadProduct(props) {
 
                 <br />
                 <br />
-
-                <label>상세설명</label>
+                <label>어쩔수 없는</label>
                 <TextArea
                     onChange={descriptionChangeHandler}
                     value={Description}

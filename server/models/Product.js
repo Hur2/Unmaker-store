@@ -38,16 +38,21 @@ const productSchema = mongoose.Schema({
     views: {
         type: Number,
         default: 0
+    },
+    detail: {
+        type: String,
+    },
+    shippingFee: {
+        type: Number,
+        default: 0
     }
 }, { timestamps: true })
 
 productSchema.index({
     title: 'text',
-    description: 'text'
 }, {
     weights:{
         title: 5,
-        description: 1
     }
 })
 

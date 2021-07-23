@@ -2,6 +2,8 @@ import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ProductImage from './Sections/ProductImage';
 import ProductInfo from './Sections/ProductInfo';
+import ProductDetail from './Sections/ProductDetail';
+import { continents } from '../LandingPage/Sections/Datas';
 import { Col, Row } from 'antd'
 
 function ProductDetailPage(props) {
@@ -20,8 +22,12 @@ function ProductDetailPage(props) {
 
     return (
         <div style={{ width: '50%', margin: '3rem auto'}}>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <h1>{Product.title}</h1>
+            <div>
+                {continents.map(item => {
+                    if(item._id == Product.continents){
+                        return item.name
+                    }
+                })}
             </div>
 
             <br />
@@ -36,6 +42,11 @@ function ProductDetailPage(props) {
                     <ProductInfo detail={Product}/>
                 </Col>
             </Row>
+
+            <hr />
+            <p>상품 상세</p>
+            <ProductDetail detail={Product}/>
+
 
         </div>
     )
