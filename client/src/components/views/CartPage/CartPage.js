@@ -14,6 +14,7 @@ function CartPage(props) {
     useEffect(() => {
         let cartItems=[]
         //리덕스 user state에 cart안에 상품 있는지 체크
+        // 있으면 불러옴.
         if(props.user.userData && props.user.userData.cart) {
             if(props.user.userData.cart.length > 0) {
                 props.user.userData.cart.forEach(item => {
@@ -25,6 +26,9 @@ function CartPage(props) {
         }
     },[props.user.userData])
 
+
+    // 총 가격을 구함.
+    // 할인가가 있으면 적용, 배송비는 상품에 대해서 1번만 적용.
     let calculateTotal = (cartDetail) => {
         let total = 0;
         cartDetail.map(item => {
@@ -38,6 +42,7 @@ function CartPage(props) {
         setShowTotal(true)
     }
 
+    
     let removeFromCart = (productId) => {
         dispatch(removeCartItem(productId))
             .then(response => {
