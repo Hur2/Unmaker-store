@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Comment, Avatar, Button, Input } from 'antd'
 import { useSelector } from 'react-redux'
 
@@ -10,9 +10,13 @@ function SingleReview(props) {
 
     const [OpenReply, setOpenReply] = useState(false)
     const [ReviewValue, setReviewValue] = useState("")
+    const [ReplyAvaiable, setReplyAvaiable] = useState(false)
     const user = useSelector(state => state.user)
 
     const onClickReplyOpen = () => {
+        if(props.detail.writer._id == user.userData._id) {
+            setReplyAvaiable(true)
+        }
         setOpenReply(!OpenReply)
     }
     
@@ -35,6 +39,7 @@ function SingleReview(props) {
                 if(response.data.success) {
                     props.refreshFunction(response.data.result)
                     setReviewValue("")
+                    setOpenReply(false)
                 } else {
                     alert('리뷰를 저장하지 못했습니다.')
                 }
@@ -50,12 +55,12 @@ function SingleReview(props) {
             <Comment 
                 actions={actions}
                 author={props.review.writer.name}
-                avatar={<Avatar src={props.review.writer.image} alt/>}
+                avatar={<Avatar src={props.review.writer.image}/>}
                 content={ <p>{ props.review.content }</p>}
             />
 
 
-            {OpenReply &&
+            {OpenReply && ReplyAvaiable &&
             <form style={{ display: 'flex' }} onSubmit={onSubmit}>
                 <textarea 
                     style={{ width: '100%', borderRadius: '5px' }}

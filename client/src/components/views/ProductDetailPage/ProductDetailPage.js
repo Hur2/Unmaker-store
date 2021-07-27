@@ -63,7 +63,7 @@ function ProductDetailPage(props) {
             <p>상품 상세</p>
             <ProductDetail detail={Product}/>
 
-            <Review refreshFunction={refreshFunction} reviewList={Reviews} productId={productId}/>
+            <Review refreshFunction={refreshFunction} reviewList={Reviews} productId={productId} detail={Product}/>
         </div>
     )
 }
