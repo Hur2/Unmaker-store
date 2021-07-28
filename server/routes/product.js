@@ -1,7 +1,9 @@
+const { request } = require('express');
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { Product } = require('../models/Product');
+const fs = require('fs')
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -20,7 +22,7 @@ router.post('/image', (req, res) => {
         if(err) {
             return res.json({ success:false, err })
         }
-        return res.json({ success:true, filePath:res.req.file.path, fileName: res.req.file.filename })
+        return res.json({ success:true, filePath: res.req.file.path, fileName: res.req.file.filename })
     })
 })
 

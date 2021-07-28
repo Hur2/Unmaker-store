@@ -23,7 +23,6 @@ const Continents = [
 function UploadProduct(props) {
 
     const [Title, setTitle] = useState("")
-    const [Description, setDescription] = useState("")
     const [Price, setPrice] = useState(0)
     const [SalePrice, setSalePrice] = useState(0)
     const [Continent, setContinent] = useState(1)
@@ -33,10 +32,6 @@ function UploadProduct(props) {
 
     const titleChangeHandler = (event) => {
         setTitle(event.currentTarget.value)
-    }
-
-    const descriptionChangeHandler = (event) => {
-        setDescription(event.currentTarget.value)
     }
 
     const priceChangeHandler = (event) => {
@@ -72,8 +67,6 @@ function UploadProduct(props) {
             return alert("카테고리를 선택하셔야 합니다.")
         } else if(!Price) {
             return alert("가격을 입력하셔야 합니다.")
-        } else if(!SalePrice) {
-            return alert("할인가격을 입력하셔야 합니다.")
         } else if(!Detail) {
             return alert("상세설명을 작성하셔야 합니다.")
         }
@@ -81,7 +74,6 @@ function UploadProduct(props) {
         const body = {
             writer: props.user.userData._id,
             title: Title,
-            description: Description,
             price: Price,
             salePrice: SalePrice,
             images: Images,
@@ -180,13 +172,6 @@ function UploadProduct(props) {
                 <br />
                 <br />
 
-                <br />
-                <br />
-                <label>어쩔수 없는</label>
-                <TextArea
-                    onChange={descriptionChangeHandler}
-                    value={Description}
-                />
                 <br />
                 <br />
 

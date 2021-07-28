@@ -9,10 +9,33 @@ import "bootstrap/js/dist/modal";
 import "bootstrap/js/dist/dropdown";
 import "bootstrap/js/dist/tooltip";
 import "bootstrap/dist/css/bootstrap.css";
+import Axios from "axios";
 
 class TextEditer extends React.Component {
   onChange = content => {
     this.props.onChangefunction(content)
+    console.log(content)
+  };
+
+  onImageUpload = (images, insertImage) => {
+
+    let formData = new FormData();
+    let url=null;
+    const config = {
+            header: { 'content-type': 'multipart/form-data'}
+        }
+    formData.append("file", images[0])
+
+    Axios.post('/api/product/image', formData, config)
+      .then(response => {
+          if(response.data.success) {
+            console.log(response.data)
+            url=`http://localhost:5000/${response.data.filePath}`
+            insertImage(url)     
+          } else {
+              alert("이미지 등록 실패!")
+          }
+      }) 
   };
 
   render() {
@@ -34,6 +57,7 @@ class TextEditer extends React.Component {
         ]
         }}
         onChange={this.onChange}
+        onImageUpload={this.onImageUpload}
     />
     );
   }
